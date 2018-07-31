@@ -1,5 +1,6 @@
 let users = require('./users.json');
 const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const router = express.Router();
 
@@ -8,7 +9,7 @@ function getUser(id) {
 }
 
 function saveJson(users) {
-	fs.writeFileSync('./users.json', JSON.stringify(users));
+	fs.writeFileSync(__dirname + '/users.json', JSON.stringify(users));
 }
 
 router.get('/', (req, res) => {
