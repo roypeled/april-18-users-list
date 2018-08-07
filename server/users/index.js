@@ -1,4 +1,5 @@
 let users = require('./users.json');
+const collection = require('./collection');
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
@@ -13,7 +14,9 @@ function saveJson(users) {
 }
 
 router.get('/', (req, res) => {
-	res.send(users);
+	collection
+		.getAllUsers()
+		.then(data => res.send(data));
 });
 
 router.post('/', (req, res) => {
@@ -31,14 +34,9 @@ router.post('/', (req, res) => {
 });
 
 router.get('/:userId', (req, res) => {
-	const user = getUser(req.params.userId);
-	if(user) {
-		res.send(user);
-	} else {
-		res
-			.status(404)
-			.send("User not found!");
-	}
+	collection
+		.getUser(req.params.userId)
+		.then(data => res.send(data))
 });
 
 router.put('/:userId', (req, res) => {
