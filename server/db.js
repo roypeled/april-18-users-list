@@ -1,10 +1,16 @@
 const { MongoClient } = require('mongodb');
 
-module.exports = () => {
+function connectMongo(){
 	return new Promise(resolve => {
 		MongoClient.connect('mongodb://localhost:27017', (err, client) => {
-			const db = client.db('users-list');
-			resolve(db);
+			resolve(client);
 		});
 	});
-};
+}
+
+function connectDB() {
+	return connectMongo()
+		.then(client => client.db('fed-project'))
+}
+
+module.exports = connectDB;

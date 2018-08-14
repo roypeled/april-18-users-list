@@ -1,69 +1,43 @@
-let posts = require('./posts.json');
-const fs = require('fs');
-const path = require('path');
-const express = require('express');
-const router = express.Router();
-
-function getPost(id) {
-	return posts.find(post => post.id == id);
-}
-
-function saveJson(posts) {
-	fs.writeFileSync(__dirname + '/posts.json', JSON.stringify(posts));
-}
+let collection = require('./collection');
+const router = require('express').Router();
+const { ObjectID } = require('mongodb');
 
 router.get('/', (req, res) => {
-	let result = posts;
+	const filter = {};
 
-	if(req.query.userId) {
-		result = result.filter(post => post.userId == req.query.userId);
-	}
+	if(req.query.userId)
+		filter.userId = ObjectID(req.query.userId);
 
-	if(req.query.search) {
-		result = result.filter(post => post.body.indexOf(req.query.search) > -1);
-	}
+	if(req.query.search)
+		filter.body = { $regex: new RegExp(req.query.search) };
 
-	res.send(result);
+	collection
+		.getAllPosts(filter)
+		.then(posts => res.send(posts));
 });
 
 router.post('/', (req, res) => {
-	const post = getPost(req.body.id);
-
-	if(!post) {
-		posts.push(req.body);
-		res.send(req.body);
-		saveJson(posts);
-	} else {
-		res
-			.status(400)
-			.send(`Post with ID ${req.body.id} already exists`);
-	}
+	collection
+		.insertPost(req.body)
+		.then(user => res.send(user));
 });
 
 router.get('/:postId', (req, res) => {
-	const post = getPost(req.params.postId);
-	if(post) {
-		res.send(post);
-	} else {
-		res
-			.status(404)
-			.send("post not found!");
-	}
+	collection
+		.getPost(req.params.postId)
+		.then(post => res.send(post));
 });
 
 router.put('/:postId', (req, res) => {
-	posts = posts.filter(post => post.id != req.params.postId);
-	posts.push(req.body);
-
-	res.send(req.body);
-	saveJson(posts);
+	collection
+		.updatePost(req.params.postId, req.body)
+		.then(data => res.send(data));
 });
 
 router.delete('/:postId', (req, res) => {
-	posts = posts.filter(post => post.id != req.params.postId);
-
-	res.send("OK");
-	saveJson(posts);
+	collection
+		.deletePost(req.params.postId)
+		.then(data => res.send(data));
 });
 
 module.exports = router;
