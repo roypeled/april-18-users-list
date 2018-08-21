@@ -1,5 +1,6 @@
 const connectdb = require('../db');
 const { ObjectID } = require('mongodb');
+const userCollection  = require('../users/collection');
 
 
 function getPostsCollection() {

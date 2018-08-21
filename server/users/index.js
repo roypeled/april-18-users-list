@@ -1,34 +1,50 @@
-const collection = require('./collection');
 const router = require('express').Router();
+const User = require('./UserModel');
 
 router.get('/', (req, res) => {
-	collection
-		.getAllUsers()
-		.then(data => res.send(data));
+	User.find({})
+		.then(users => res.send(users))
+		.catch(e => res.status(400).send(e.message));
 });
 
 router.post('/', (req, res) => {
-	collection
-		.insertUser(req.body)
-		.then(user => res.send(user));
+	const user = new User(req.body);
+	user.save()
+		.then(user => res.send(user))
+		.catch(e => res.status(400).send(e.message));
 });
 
 router.get('/:userId', (req, res) => {
-	collection
-		.getUser(req.params.userId)
-		.then(data => res.send(data));
+	User.findById(req.params.userId)
+		.then(user => {
+			if(user)
+				res.send(user);
+			else
+				res.status(404).send("User not found");
+		})
+		.catch(e => res.status(400).send(e.message));
 });
 
 router.put('/:userId', (req, res) => {
-	collection
-		.updateUser(req.params.userId, req.body)
-		.then(data => res.send(data));
+	User.findByIdAndUpdate(req.params.userId, req.body)
+		.then(user => {
+			if(user)
+				res.send(user);
+			else
+				res.status(404).send("User not found");
+		})
+		.catch(e => res.status(400).send(e.message));
 });
 
 router.delete('/:userId', (req, res) => {
-	collection
-		.deleteUser(req.params.userId)
-		.then(data => res.send(data));
+	User.findByIdAndRemove(req.params.userId)
+		.then(user => {
+			if(user)
+				res.send(user);
+			else
+				res.status(404).send("User not found");
+		})
+		.catch(e => res.status(400).send(e.message));
 });
 
 module.exports = router;

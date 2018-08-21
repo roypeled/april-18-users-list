@@ -1,16 +1,5 @@
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 
-function connectMongo(){
-	return new Promise(resolve => {
-		MongoClient.connect('mongodb://localhost:27017', (err, client) => {
-			resolve(client);
-		});
-	});
-}
+mongoose.connect('mongodb://localhost:27017/fed-mongoose');
 
-function connectDB() {
-	return connectMongo()
-		.then(client => client.db('fed-project'))
-}
-
-module.exports = connectDB;
+module.exports = mongoose;
