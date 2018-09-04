@@ -3,7 +3,7 @@ let $ = require("jquery");
 class PostsService{
 
     getPosts(userId){
-        return $.get(`/api/users/${userId}/posts`);
+        return $.get(`/api/posts/?userId=${userId}`);
     }
 
     getAll(params){
@@ -11,7 +11,7 @@ class PostsService{
     }
 
     getTags(){
-        return $.get(`/api/tags`);
+        return Promise.resolve([]);
     }
 
 }
