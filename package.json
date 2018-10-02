@@ -6,8 +6,8 @@
   "scripts": {
     "test": "karma start",
 	"react": "webpack",
-	"start": "npm run react",
-	"poststart": "node server/server.js"
+	"postinstall": "npm run react",
+	"postreact": "node server/server.js"
   },
   "repository": {
     "type": "git",
