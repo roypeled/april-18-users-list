@@ -4,7 +4,10 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+	"react": "webpack",
+	"start": "npm run react",
+	"poststart": "node server/server.js"
   },
   "repository": {
     "type": "git",

@@ -10,7 +10,7 @@ server.use(bodyParser.json());
 server.use("/api/users/", users);
 server.use("/api/posts/", posts);
 
-// users-list/server + ../dist
+// users-list/server + ../dist = users-list/dist
 const distFolder = path.join(__dirname, '../dist');
 
 server.use(express.static(distFolder));
