@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "karma start",
+	  "prestart": "webpack",
     "start": "node server/server.js"
   },
   "repository": {

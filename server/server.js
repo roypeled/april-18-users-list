@@ -12,4 +12,4 @@ server.use("/api/posts/", posts);
 
 server.use(express.static(path.resolve(__dirname,'../dist')));
 
-server.listen(9090);
+server.listen(process.env.PORT || 9090);
