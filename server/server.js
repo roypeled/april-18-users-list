@@ -15,4 +15,4 @@ const distFolder = path.join(__dirname, '../dist');
 
 server.use(express.static(distFolder));
 
-server.listen(9090);
+server.listen(80);
