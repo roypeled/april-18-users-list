@@ -6,7 +6,6 @@ function getPost( {title, body, author, tags}, index ){
                 <dt>{title}</dt>
                 { getAuthor(author) }
                 <dd>{body}</dd>
-                { tags.map(tag => <small key={tag._id}> {tag.label}, </small>)  }
             </dl>)
 }
 

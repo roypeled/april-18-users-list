@@ -66,11 +66,7 @@ class Posts extends React.Component {
                     </ul>
                 </nav>
                 <main className="user-page">
-                    <UserPosts posts={ this.props.posts.docs }/>
-
-                    <div>
-                        { this.renderPageButtons(this.props.posts.pages) }
-                    </div>
+                    <UserPosts posts={ this.props.posts }/>
                 </main>
             </div>)
     }
