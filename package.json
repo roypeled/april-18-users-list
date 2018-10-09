@@ -5,9 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "karma start",
-	"react": "webpack",
-	"postinstall": "npm run react",
-	"start": "node server/server.js"
+    "postinstall": "webpack",
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
